@@ -124,6 +124,9 @@
 	<script src="js/ws/getcommoditycountries.js"></script>
 	<script src="js/ws/getcommoditydata.js"></script>
 
+<!-- vvb -->
+	<script src="js/addfunctions.js">
+<!-- end vvb -->
 
 <script type="text/javascript">
 
@@ -181,8 +184,10 @@ function commodityViewModel() {
 			}
 
 // vvb
+
 var chartData = [];
 var attrs     = self.commodityAttrs();
+var sortedObj = getSortedAttrs(attrs);
  
 for (var n=0;n<result.data.length;n++ )
 {
@@ -200,15 +205,12 @@ for (var n=0;n<result.data.length;n++ )
 }
  
 var chart = new AmCharts.AmStockChart();
-//var stockPanel = new AmCharts.StockPanel();
- 
 var curStockPanelObj 	 = new Object;
 var visibleStockPanelObj = new Object;
  
 var stockPanels = [];
 for (var j=0;j<attrs.length;j++)
 {
-//  alert(attrs[j].unit);
 	var curPanel = curStockPanelObj[attrs[j].unit];
 	if ( ( curPanel == undefined) ) // Панелька эвэл
 	{
@@ -219,7 +221,6 @@ for (var j=0;j<attrs.length;j++)
 
 		if ( ( attrs[j].isChecked() ) ){
 		  visibleStockPanelObj[attrs[j].unit] = curStockPanel;
-		  stockPanels.push(curStockPanel);
 		}
 
 		curStockPanelObj[attrs[j].unit] = curStockPanel;
@@ -230,11 +231,18 @@ for (var j=0;j<attrs.length;j++)
 		    if (visibleStockPanelObj[attrs[j].unit] == undefined )
 		    {
 			visibleStockPanelObj[attrs[j].unit] = curPanel;
-			stockPanels.push(curPanel);
 		    }
 		}
 	}
+}
 
+
+for ( var p in sortedObj )
+{
+  
+  if (visibleStockPanelObj[p] != undefined ){
+    stockPanels.push(visibleStockPanelObj[p]);
+  }
 }
  
 var dataSet = new AmCharts.DataSet();
@@ -277,7 +285,7 @@ chartDiv = document.getElementById('chartdiv');
 chartHeight = chart.panels.length * 250;
 chartDiv.style.height = "" + chartHeight + "px";
 chart.write('chartdiv');
- 
+
 // end vvb	
 		};
 
