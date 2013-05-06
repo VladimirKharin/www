@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Графики фьючерсов</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -14,7 +14,7 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<!--    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -31,12 +31,21 @@
   </head>
 
 <style>
-.mystyle input[type="text"] {
-   width: 20px;
-   height: 14px;
-   font-size: 10px;
-   line-height: 14px;
+.myhover:hover {
+  background-color: #e5e5f5;
 }
+
+table.studyparams td, 
+table.studyparams th {
+    padding: 2px; 
+    font-size: 12px;
+}
+
+i.iconbtn:hover {
+  background-color: rgba(255,0,0,.25);
+  border: 1px solid black;
+}
+
 </style>
 
 
@@ -44,7 +53,7 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -67,55 +76,132 @@
     </div>
 
 
-<div class="container-fluid"> <!--  -->
+<div class="container-fluid"> 
 
 	<div class="row-fluid">
 
-		<div class="span2">
+		<div style="position: absolute; left: 0 px; width: 200px;">  <!-- class="span2" -->
 
-			<div class="dropdown">
-				<a type="button" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#">
-					<span data-bind="text: chartBaseSerieTypeText"></span>
-					<b class="caret"></b>
-				</a>
+       		<div class="well" style="padding: 9px;">
+
+			    <div class="dropdown">
+				    <a type="button" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+					    <span data-bind="text: chartBaseSerieTypeText"></span>
+					    <b class="caret"></b>
+				    </a>
 				
-				<ul class="dropdown-menu">
-					<li><a data-bind="click: сhartBaseSerieTypeSymbolSelected" href="#">Символ</a></li>
-					<li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Спред</a></li>
-				</ul>
-			</div>
+				    <ul class="dropdown-menu">
+					    <li><a data-bind="click: сhartBaseSerieTypeSymbolSelected" href="#">Символ</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Спред</a></li>
+				    </ul>
+			    </div>
 
-			<div data-bind="visible: chartBaseSerieTypeIsSymbol()">
-				<div class="input-append">
-					<input data-bind="value: symbol1" class="input-mini" type="text" placeholder="Символ…"><button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
-				</div>
-			</div>
-			<div data-bind="visible: chartBaseSerieTypeIsSpread()">
-				<div class="input-append" style="margin-bottom: 5px;">
-					<input data-bind="value: symbol1" class="input-mini" type="text" placeholder="Символ…">
-					<button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
-					<input data-bind="value: mult1" style="width: 36px; margin-left: 4px;" type="number" placeholder="">
-				</div>
+			    <div data-bind="visible: chartBaseSerieTypeIsSymbol()">
+				    <div class="input-append">
+					    <input data-bind="value: symbol1" class="input-mini" type="text" placeholder="Символ…"><button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
+				    </div>
+			    </div>
+			    <div data-bind="visible: chartBaseSerieTypeIsSpread()">
+				    <div class="input-append" style="margin-bottom: 5px;">
+					    <input data-bind="value: symbol1" class="input-mini" type="text" placeholder="Символ…">
+					    <button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
+					    <input data-bind="value: mult1" style="width: 48px; margin-left: 4px;" type="number" placeholder="">
+				    </div>
 
-				<div class="input-append" style="margin-bottom: 5px;">
-					<input data-bind="value: symbol2" class="input-mini" type="text" placeholder="Символ…">
-					<button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
-					<input data-bind="value: mult2" style="width: 36px; margin-left: 4px;" type="number" placeholder="">
-					<a data-bind="visible: !spreadLeg3(), click: addSpreadLeg3" type="button" role="button" href="#" style=""><i class="icon-plus"></i></a>
-				</div>
+				    <div class="input-append" style="margin-bottom: 5px;">
+					    <input data-bind="value: symbol2" class="input-mini" type="text" placeholder="Символ…">
+					    <button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
+					    <input data-bind="value: mult2" style="width: 48px; margin-left: 4px;" type="number" placeholder="">
+					    <a data-bind="visible: !spreadLeg3(), click: addSpreadLeg3" type="button" role="button" href="#" style=""><i class="icon-plus"></i></a>
+				    </div>
 
-				<div data-bind="visible: spreadLeg3()" class="input-append" style="margin-bottom: 5px;">
-					<input data-bind="value: symbol3" class="input-mini" type="text" placeholder="Символ…">
-					<button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
-					<input data-bind="value: mult3" style="width: 36px; margin-left: 4px;" type="number" placeholder="">
-					<a data-bind="click: removeSpreadLeg3" type="button" role="button" href="#" style=""><i class="icon-minus"></i></a>
-				</div>
-			</div>
+				    <div data-bind="visible: spreadLeg3()" class="input-append" style="margin-bottom: 5px;">
+					    <input data-bind="value: symbol3" class="input-mini" type="text" placeholder="Символ…">
+					    <button class="btn" style="padding-left: 4px; padding-right: 4px" type="button"><i class="icon-chevron-down"></i></button>
+					    <input data-bind="value: mult3" style="width: 48px; margin-left: 4px;" type="number" placeholder="">
+					    <a data-bind="click: removeSpreadLeg3" type="button" role="button" href="#" style=""><i class="icon-minus"></i></a>
+				    </div>
+			    </div>
+
+                <div data-bind="foreach: chartStudies">
+                    <div data-bind="if: editingState">
+                        <div data-bind="if: studyType=='MA'">
+                            <div style="background-color: #e5e5f5;">
+                            <p style="margin-bottom: 4px;"><strong>Moving average</strong> <i data-bind="click: $parent.studyRemoveClick" class="icon-remove iconbtn"></i></p>
+                            <table cellpadding="0" cellspacing="0" class="studyparams" style=""><tbody>
+                                <tr>
+                                    <td>Период:</td>
+                                    <td><input data-bind="value: periodEd" class="input-mini" type="number" style="padding: 1px; font-size: 12px; margin-bottom: 0px;"></td>
+                                </tr>
+                                <tr>
+                                    <td>Тип:</td>
+                                    <td>
+                                        <select data-bind="options: availableMethods, value: methodEd" style="width: 100px; padding: 1px; font-size: 12px; height: 24px; margin-bottom: 0px;"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Поле цены:</td>
+                                    <td>
+                                        <select data-bind="options: availablePriceFields, value: priceFieldEd" style="width: 100px; padding: 1px; font-size: 12px; height: 24px; margin-bottom: 0px;"></select>
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                            
+                            <div style="margin-top: 2px; padding-bottom: 4px;">
+                                <button data-bind="click: studyApplyChanges" type="button" class="btn btn-mini btn-primary">Применить</button>
+                                <button data-bind="click: studyCancelChanges" type="button" class="btn btn-mini">Отмена</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div data-bind="ifnot: editingState">
+                        <div class="myhover"><strong><a data-bind="click: $parent.studyClick" type="button" role="button" href="#"><span data-bind="text: getStudyShortDescr"></span></a></strong></div>
+                    </div>
+                </div>
+
+
+			    <div class="dropdown">
+				    <a type="button" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+					    &plus; исследование
+					    <b class="caret"></b>
+				    </a>
+				
+				    <ul class="dropdown-menu">
+					    <li><a data-bind="click: сhartAddStudyMA" href="#">Moving Average</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Linear Regression</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Bollinger Bands</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">RSI</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">VSA</a></li>
+					    <li class="divider"></li>
+                        <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">COT</a></li>
+                        <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Historical Volatility</a></li>
+                        <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Implied Volatility</a></li>
+				    </ul>
+			    </div>
+
+                <hr style="margin: 10px 0;" />
+
+			    <div class="dropdown">
+				    <a type="button" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#">
+					    еще график
+					    <b class="caret"></b>
+				    </a>
+				
+				    <ul class="dropdown-menu">
+					    <li><a data-bind="click: сhartBaseSerieTypeSymbolSelected" href="#">Символ</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Спред</a></li>
+					    <li><a data-bind="click: сhartBaseSerieTypeSpreadSelected" href="#">Макроэкономика</a></li>
+				    </ul>
+			    </div>
+
+
+       		</div>
 
 		</div>
 
 
-		<div class="span10">
+		<div  style="position: absolute; left: 240px; right: 20px;">
 			<button data-bind="click: refreshChart" id="btn_refresh_chart" class="btn" type="button">Обновить график</button>
 
 			<div id="chartdiv" style="width:100%; height:600px;"></div>
@@ -150,13 +236,16 @@
 	<script src="js/getquotes.js"></script>
 	<script src="js/getsymbolinfo.js"></script>-->
 
+    <script src="js/studies_ma.js"></script>
+
 
 <script type="text/javascript">
 
 function chartViewModel() {
 	var self = this;
 
-	self.chartBaseSerieType = ko.observable("Symbol");
+	// Тип основного графика (символ или спред)
+    self.chartBaseSerieType = ko.observable("Symbol");
 	self.chartBaseSerieTypeIsSymbol = ko.computed(function() { 
 		return self.chartBaseSerieType() == "Symbol";
 	});
@@ -171,29 +260,61 @@ function chartViewModel() {
 		else return "";
   	});
 
-	self.spreadLeg3 = ko.observable(false);
+    // Оброботчики выбора типа основного графика
+    self.сhartBaseSerieTypeSymbolSelected = function () {
+        self.chartBaseSerieType("Symbol");
+    };
+    self.сhartBaseSerieTypeSpreadSelected = function () {
+        self.chartBaseSerieType("Spread");
+    };
 
-	self.symbol1 = ko.observable("");
+
+    // Символы основного графика. Если тип - символ, тогда symbol1, а если спред, то до 3-х ног
+    self.symbol1 = ko.observable("");
 	self.symbol2 = ko.observable("");
 	self.symbol3 = ko.observable("");
 
+	// Множители ног спреда
 	self.mult1 = ko.observable(1);
 	self.mult2 = ko.observable(-1);
 	self.mult3 = ko.observable(1);
 
-	self.сhartBaseSerieTypeSymbolSelected = function() {
-		self.chartBaseSerieType("Symbol");
-	};
-	self.сhartBaseSerieTypeSpreadSelected = function() {
-		self.chartBaseSerieType("Spread");
-	};
-
+	// Есть ли 3-я нога спреда (а также обработчики добавления и удаления 3-й ноги)
+	self.spreadLeg3 = ko.observable(false);
 	self.addSpreadLeg3 = function() {
 		self.spreadLeg3(true);
 	};
 	self.removeSpreadLeg3 = function() {
 		self.spreadLeg3(false);
-	};
+    };
+
+
+    // Индикаторы к основному графику
+    self.chartStudies = ko.observableArray();
+
+    // Обработчики добавление индикаторов
+    self.сhartAddStudyMA = function () {
+        self.chartStudies.push(new studyMovingAverage());
+    };
+
+    // Включение режима редактирования индикатора
+    self.studyClick = function () {
+        this.setToEditingState();
+
+        for (var i = 0; i < self.chartStudies().length; i++) {
+            var study = self.chartStudies()[i];
+            if (study != this) {
+                if (study.editingState() == true) {
+                    study.studyCancelChanges();
+                }
+            }
+        }
+    }
+
+    self.studyRemoveClick = function () {
+        self.chartStudies.remove(this);
+    };
+
 
 	self.refreshChart = function() {
 		alert(self.symbol1());
